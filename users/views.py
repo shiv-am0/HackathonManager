@@ -112,16 +112,19 @@ def post_hackathon(request):
             start_time = request.POST.get('start_time')
             end_time = request.POST.get('end_time')
 
-            new_hackathon = Hackathon.objects.create(
-                user=user, title=title, description=description,
-                start_time=start_time, end_time=end_time)
+            if Hackathon.objects.filter(title=title).exists():
+                return HttpResponse("Hackathon with this name already exists. Choose another name.")
+            else:
+                new_hackathon = Hackathon.objects.create(
+                    user=user, title=title, description=description,
+                    start_time=start_time, end_time=end_time)
 
-            new_hackathon.save()
-            return JsonResponse({
-                "id": new_hackathon.id,
-                "name": new_hackathon.title,
-                "message": "Hackathon posted successfully."
-            })
+                new_hackathon.save()
+                return JsonResponse({
+                    "id": new_hackathon.id,
+                    "name": new_hackathon.title,
+                    "message": "Hackathon posted successfully."
+                })
         else:
             return HttpResponse('Some error occurred.')
     else:
