@@ -2,6 +2,7 @@ from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, auth
 from .models import Profile, Hackathon
+from django.core import serializers
 
 
 # Below function is used to get the object of currently logged-in user and use that to get the user profile
@@ -125,3 +126,11 @@ def post_hackathon(request):
             return HttpResponse('Some error occurred.')
     else:
         return HttpResponse('You have to be a superuser to post a hackathon.')
+
+
+# Get the JSON response containing all the posted hackathons.
+@login_required()
+def get_hackathons(request):
+    all_hackathons = Hackathon.objects.all()
+    data = serializers.serialize('json', all_hackathons)
+    return JsonResponse(data, safe=False)
