@@ -1,7 +1,7 @@
 from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, auth
-from .models import Profile
+from .models import Profile, Hackathon
 
 
 @login_required()
@@ -102,6 +102,24 @@ def logout(request):
 @login_required()
 def post_hackathon(request):
     if request.user.is_superuser:
-        return HttpResponse('You can post hackathon')
+        if request.method == 'POST':
+            user = request.user.username
+            title = request.POST.get('title')
+            description = request.POST.get('description')
+            start_time = request.POST.get('start_time')
+            end_time = request.POST.get('end_time')
+
+            new_hackathon = Hackathon.objects.create(
+                user=user, title=title, description=description,
+                start_time=start_time, end_time=end_time)
+
+            new_hackathon.save()
+            return JsonResponse({
+                "id": new_hackathon.id,
+                "name": new_hackathon.title,
+                "message": "Hackathon posted successfully."
+            })
+        else:
+            return HttpResponse('Some error occurred.')
     else:
-        return HttpResponse('You have to be a superuser')
+        return HttpResponse('You have to be a superuser to post a hackathon.')
