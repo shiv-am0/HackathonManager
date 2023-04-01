@@ -139,6 +139,9 @@ def get_hackathons(request):
     return JsonResponse(data, safe=False)
 
 
+# Below function is used to registering a user for a hackathon.
+# The user provides the title of the hackathon that he wants to register in.
+# User can only be registered into one hackathon at a time.
 @login_required()
 def register_for_hackathon(request):
     if request.method == 'POST':
