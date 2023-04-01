@@ -137,3 +137,34 @@ def get_hackathons(request):
     all_hackathons = Hackathon.objects.all()
     data = serializers.serialize('json', all_hackathons)
     return JsonResponse(data, safe=False)
+
+
+@login_required()
+def register_for_hackathon(request):
+    if request.method == 'POST':
+        hackathon_title = request.POST.get('hackathon_title')
+        user = request.user.username
+
+        if Profile.objects.get(user=user).registered_hackathon is not '.':
+            return JsonResponse({
+                "hackathon_title": hackathon_title,
+                "user": user,
+                "message": "You are already registered."
+            })
+        else:
+            if Hackathon.objects.filter(title=hackathon_title).exists():
+                cur_user = Profile.objects.get(id_user=request.user.id)
+                cur_user.registered_hackathon = hackathon_title
+                cur_user.save()
+                return JsonResponse({
+                    "username": cur_user.user.username,
+                    "registered_hackathon": cur_user.registered_hackathon,
+                    "message": "Registered successfully."
+                })
+            else:
+                return HttpResponse('The hackathon of the provided title does not exist.')
+
+    else:
+        return HttpResponse('Some error occurred.')
+
+
