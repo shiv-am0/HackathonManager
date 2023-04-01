@@ -1,18 +1,18 @@
-from django.shortcuts import render
-from django.contrib import messages
 from django.http import HttpResponse, JsonResponse
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, auth
-from django.views.decorators.csrf import csrf_exempt
-from django.utils.decorators import method_decorator
 from .models import Profile
 
 
 @login_required()
 def index(request):
-    return HttpResponse({
-        'message': 'Working'
+    # Get the object of currently logged-in user and use that to get the user profile
+    user_object = User.objects.get(username=request.user.username)
+    user_profile = Profile.objects.get(user=user_object)
+
+    return JsonResponse({
+        "username": user_profile.user.username,
+        "message": "User logged in"
     })
 
 
@@ -23,6 +23,8 @@ def signup(request):
         email = request.POST.get('email')
         password = request.POST.get('password')
         password2 = request.POST.get('password2')
+        is_super_user = request.POST.get('isSuperUser')
+        print(is_super_user)
 
         # Proceed if the entered password matches with the conform password
         if password == password2:
@@ -31,7 +33,12 @@ def signup(request):
             elif User.objects.filter(username=username).exists():
                 return JsonResponse({"message": "Username already exists"})
             else:
-                user = User.objects.create_user(username=username, email=email, password=password)
+                if is_super_user == 'true':
+                    print("Creating superuser")
+                    user = User.objects.create_superuser(username=username, email=email, password=password)
+                else:
+                    print("Creating normal user")
+                    user = User.objects.create_user(username=username, email=email, password=password)
                 user.save()
 
                 # Log user in after registering
@@ -40,12 +47,13 @@ def signup(request):
 
                 # Create a Profile object for the new user
                 user_model = User.objects.get(username=username)
-                new_profile = Profile.objects.create(user=user_model, id_user=user_model.id)
+                new_profile = Profile.objects.create(user=user_model, id_user=user_model.id, is_super_user=user_model.is_superuser)
                 new_profile.save()
 
                 return JsonResponse({
                     "username": user_model.username,
                     "email": user_model.email,
+                    "isSuperUser": user_model.is_superuser,
                     "message": "User successfully registered."
                 })
         else:
@@ -89,3 +97,11 @@ def logout(request):
     return JsonResponse({
         "message": "Logout successful"
     })
+
+
+@login_required()
+def post_hackathon(request):
+    if request.user.is_superuser:
+        return HttpResponse('You can post hackathon')
+    else:
+        return HttpResponse('You have to be a superuser')
