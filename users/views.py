@@ -4,9 +4,9 @@ from django.contrib.auth.models import User, auth
 from .models import Profile, Hackathon
 
 
+# Below function is used to get the object of currently logged-in user and use that to get the user profile
 @login_required()
 def index(request):
-    # Get the object of currently logged-in user and use that to get the user profile
     user_object = User.objects.get(username=request.user.username)
     user_profile = Profile.objects.get(user=user_object)
 
@@ -99,6 +99,8 @@ def logout(request):
     })
 
 
+# Below function is used to post a new hackathon. Only superusers are allowed to post a hackathon.
+# If the logged-in user is a superuser then he is allowed to post a hackathon, else not.
 @login_required()
 def post_hackathon(request):
     if request.user.is_superuser:
