@@ -145,7 +145,7 @@ def register_for_hackathon(request):
         hackathon_title = request.POST.get('hackathon_title')
         user = request.user.username
 
-        if Profile.objects.get(user=user).registered_hackathon is not '.':
+        if Profile.objects.get(id_user=request.user.id).registered_hackathon is not '.':
             return JsonResponse({
                 "hackathon_title": hackathon_title,
                 "user": user,
