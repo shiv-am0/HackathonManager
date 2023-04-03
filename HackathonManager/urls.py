@@ -19,7 +19,7 @@ from django.urls import path, include
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("users.urls")),
-    path("portal/", include("users.urls")),
+    path("users/", include("users.urls")),
     # Below path is used to access Django in-built user auth as the 'users' app will manage the authentication
-    path("portal/", include("django.contrib.auth.urls")),
+    path("users/", include("django.contrib.auth.urls")),
 ]
