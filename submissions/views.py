@@ -1,3 +1,5 @@
+import datetime
+import pytz
 from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.decorators import login_required
 from .models import Submission
@@ -20,6 +22,7 @@ def get_all_submissions(request):
     if request.user.is_superuser:
         if request.method == 'POST':
             hackathon_title = request.POST.get('hackathon_title')
+            # sort_by = request.POST.get('sort_by')
             print(hackathon_title)
             all_submissions = Submission.objects.all()
             print(all_submissions)
@@ -69,7 +72,8 @@ def make_submission(request):
                 summary=summary,
                 hackathon_title=hackathon_title,
                 github_link=github_link,
-                created_by=created_by
+                created_by=created_by,
+                submission_time=datetime.datetime.now(pytz.timezone('Asia/Kolkata'))
             )
 
             new_submission.save()

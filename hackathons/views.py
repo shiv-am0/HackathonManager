@@ -32,7 +32,7 @@ def post_hackathon(request):
             else:
                 new_hackathon = Hackathon.objects.create(
                     user=user, title=title, description=description,
-                    start_time=start_time, end_time=end_time)
+                    start_time=start_time, end_time=end_time, created_by=request.user.username)
 
                 new_hackathon.save()
                 return JsonResponse({
@@ -84,3 +84,15 @@ def register_for_hackathon(request):
 
     else:
         return HttpResponse('Some error occurred.')
+
+
+# Below function is used to delete a posted hackathon. It can be deleted only by a superuser.
+# @login_required()
+# def delete_hackathon(request):
+#     if request.user.is_superuser:
+#         if request.method == 'POST':
+#             pass
+#         else:
+#             return HttpResponse('An error occurred.')
+#     else:
+#         return HttpResponse('You have to be a superuser to delete a posted hackathon.')

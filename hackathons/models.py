@@ -10,6 +10,7 @@ class Hackathon(models.Model):
     description = models.TextField()
     start_time = models.DateTimeField(default=datetime.now)
     end_time = models.DateTimeField(default=datetime.now)
+    created_by = models.CharField(max_length=100)
 
     def __str__(self):
         return self.user
