@@ -18,17 +18,23 @@ def index(request):
 def get_all_submissions(request):
     if request.method == 'POST':
         hackathon_title = request.POST.get('hackathon_title')
+        print(hackathon_title)
         all_submissions = Submission.objects.all()
+        print(all_submissions)
         res = []
 
+        found = False
         for sub in all_submissions:
             if sub.hackathon_title == str(hackathon_title):
+                found = True
                 res.append(sub)
-            else:
-                return HttpResponse("There are no submissions.")
 
-        data = serializers.serialize('json', res)
-        return JsonResponse(data, safe=False)
+        if found is True:
+            data = serializers.serialize('json', res)
+            print(f'Data = {data}')
+            return JsonResponse(data, safe=False)
+        else:
+            return HttpResponse("There are no submissions.")
     else:
         return HttpResponse("An error occurred.")
 
