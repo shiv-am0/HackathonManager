@@ -29,12 +29,15 @@ def make_submission(request):
         summary = request.POST.get('summary')
         hackathon_title = request.POST.get('hackathon_title')
         github_link = request.POST.get('github_link')
+        created_by = request.user.username
 
         if Profile.objects.get(id_user=request.user.id).registered_hackathon != hackathon_title:
             return HttpResponse('Yor are not registered for this hackathon.')
-        elif Profile.objects.get(id_user=request.user.id).registered_hackathon == hackathon_title:
+        elif Profile.objects.get(id_user=request.user.id).registered_hackathon == hackathon_title and \
+                Submission.objects.filter(created_by=created_by).exists():
             return JsonResponse({
                 "username": request.user.username,
+                "created_by": created_by,
                 "hackathon_title": hackathon_title,
                 "message": "You have already submitted your submission."
             })
@@ -43,7 +46,8 @@ def make_submission(request):
                 submission_name=submission_name,
                 summary=summary,
                 hackathon_title=hackathon_title,
-                github_link=github_link
+                github_link=github_link,
+                created_by=created_by
             )
 
             new_submission.save()
@@ -58,3 +62,27 @@ def make_submission(request):
         return HttpResponse("An error occurred.")
 
 
+@login_required()
+def delete_submission(request):
+    if request.method == 'POST':
+        submission_name = request.POST.get('submission_name')
+        hackathon_title = request.POST.get('hackathon_title')
+        created_by = request.user.username
+
+        if Submission.objects.filter(submission_name=submission_name, hackathon_title=hackathon_title,
+                                     created_by=created_by).exists():
+            my_submission = Submission.objects.get(submission_name=submission_name, hackathon_title=hackathon_title,
+                                                   created_by=created_by)
+
+            my_submission.delete()
+
+            return JsonResponse({
+                "submission_name": my_submission.submission_name,
+                "hackathon_title": my_submission.hackathon_title,
+                "created_by": my_submission.created_by,
+                "message": "Submission deleted successfully."
+            })
+        else:
+            return HttpResponse("This submission can not be deleted.")
+    else:
+        return HttpResponse("An error occurred.")

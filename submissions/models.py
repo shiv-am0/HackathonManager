@@ -8,3 +8,4 @@ class Submission(models.Model):
     summary = models.CharField(max_length=200)
     hackathon_title = models.CharField(max_length=100)
     github_link = models.CharField(max_length=200)
+    created_by = models.CharField(max_length=100)
