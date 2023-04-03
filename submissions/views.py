@@ -15,28 +15,32 @@ def index(request):
 
 
 # Function to get all submissions to a particular hackathon
+@login_required()
 def get_all_submissions(request):
-    if request.method == 'POST':
-        hackathon_title = request.POST.get('hackathon_title')
-        print(hackathon_title)
-        all_submissions = Submission.objects.all()
-        print(all_submissions)
-        res = []
+    if request.user.is_superuser:
+        if request.method == 'POST':
+            hackathon_title = request.POST.get('hackathon_title')
+            print(hackathon_title)
+            all_submissions = Submission.objects.all()
+            print(all_submissions)
+            res = []
 
-        found = False
-        for sub in all_submissions:
-            if sub.hackathon_title == str(hackathon_title):
-                found = True
-                res.append(sub)
+            found = False
+            for sub in all_submissions:
+                if sub.hackathon_title == str(hackathon_title):
+                    found = True
+                    res.append(sub)
 
-        if found is True:
-            data = serializers.serialize('json', res)
-            print(f'Data = {data}')
-            return JsonResponse(data, safe=False)
+            if found is True:
+                data = serializers.serialize('json', res)
+                print(f'Data = {data}')
+                return JsonResponse(data, safe=False)
+            else:
+                return HttpResponse("There are no submissions.")
         else:
-            return HttpResponse("There are no submissions.")
+            return HttpResponse("An error occurred.")
     else:
-        return HttpResponse("An error occurred.")
+        return HttpResponse('You have to be a superuser to view the submissions.')
 
 
 # Below function is used to make a submission to the registered hackathon by the user.
