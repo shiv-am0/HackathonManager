@@ -14,7 +14,7 @@ def index(request):
     })
 
 
-# Function to get all submissions to a particular hackathon
+# Function to get all submissions to a particular hackathon. Submissions can only be viewed by superusers.
 @login_required()
 def get_all_submissions(request):
     if request.user.is_superuser:
@@ -84,6 +84,7 @@ def make_submission(request):
         return HttpResponse("An error occurred.")
 
 
+# Delete a submission based on its submission name and hackathon title.
 @login_required()
 def delete_submission(request):
     if request.method == 'POST':
