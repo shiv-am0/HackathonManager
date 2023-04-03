@@ -3,6 +3,8 @@ from django.core import serializers
 from users.models import Profile
 from django.http import HttpResponse, JsonResponse
 from .models import Hackathon
+from users.models import Profile
+from submissions.models import Submission
 
 
 # Root Function
@@ -87,12 +89,30 @@ def register_for_hackathon(request):
 
 
 # Below function is used to delete a posted hackathon. It can be deleted only by a superuser.
-# @login_required()
-# def delete_hackathon(request):
-#     if request.user.is_superuser:
-#         if request.method == 'POST':
-#             pass
-#         else:
-#             return HttpResponse('An error occurred.')
-#     else:
-#         return HttpResponse('You have to be a superuser to delete a posted hackathon.')
+@login_required()
+def delete_hackathon(request):
+    if request.user.is_superuser:
+        if request.method == 'POST':
+            hackathon_title = request.POST.get('hackathon_title')
+
+            if Hackathon.objects.filter(title=hackathon_title).exists():
+                my_hackathon = Hackathon.objects.get(title=hackathon_title)
+                cur_user = Profile.objects.get(user=request.user)
+                all_submissions = Submission.objects.all()
+                cur_user.registered_hackathon = '.'
+                cur_user.save()
+                all_submissions.delete()
+                my_hackathon.delete()
+
+                return JsonResponse({
+                    "hackathon_title": hackathon_title,
+                    "created_by": request.user.username,
+                    "message": "Hackathon deleted successfully."
+                })
+            else:
+                return HttpResponse("This hackathon can not be deleted.")
+
+        else:
+            return HttpResponse('An error occurred.')
+    else:
+        return HttpResponse('You have to be a superuser to delete a posted hackathon.')
