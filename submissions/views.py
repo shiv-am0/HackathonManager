@@ -16,9 +16,21 @@ def index(request):
 
 # Function to get all submissions to a particular hackathon
 def get_all_submissions(request):
-    all_submissions = Submission.objects.all()
-    data = serializers.serialize('json', all_submissions)
-    return JsonResponse(data, safe=False)
+    if request.method == 'POST':
+        hackathon_title = request.POST.get('hackathon_title')
+        all_submissions = Submission.objects.all()
+        res = []
+
+        for sub in all_submissions:
+            if sub.hackathon_title == str(hackathon_title):
+                res.append(sub)
+            else:
+                return HttpResponse("There are no submissions.")
+
+        data = serializers.serialize('json', res)
+        return JsonResponse(data, safe=False)
+    else:
+        return HttpResponse("An error occurred.")
 
 
 # Below function is used to make a submission to the registered hackathon by the user.
