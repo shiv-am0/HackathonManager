@@ -1,0 +1,484 @@
+{
+	"info": {
+		"_postman_id": "812b7a9d-158f-430c-bc11-a98ebb9f8fdf",
+		"name": "HackathonManagement",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Users Home",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8000/users",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Signup",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "u1",
+							"type": "default"
+						},
+						{
+							"key": "email",
+							"value": "u1@gmail.com",
+							"type": "default"
+						},
+						{
+							"key": "password",
+							"value": "123",
+							"type": "default"
+						},
+						{
+							"key": "password2",
+							"value": "123",
+							"type": "default"
+						},
+						{
+							"key": "isSuperUser",
+							"value": "true",
+							"type": "default"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8000/users/signup",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"users",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Signin",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "u0",
+							"type": "default"
+						},
+						{
+							"key": "password",
+							"value": "123",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:8000/users/signin?",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"users",
+						"signin"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Signout",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8000/users/logout",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"users",
+						"logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Hackathons Home",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8000/users/hackathons",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"users",
+						"hackathons"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post Hackathon",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "title",
+							"value": "CodeGeek",
+							"type": "default"
+						},
+						{
+							"key": "description",
+							"value": "Hiring Challange",
+							"type": "default"
+						},
+						{
+							"key": "start_time",
+							"value": "2023-04-10 15:00:00",
+							"type": "default"
+						},
+						{
+							"key": "end_time",
+							"value": "2023-05-10 23:59:59",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:8000/users/hackathons/post_hackathon",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"users",
+						"hackathons",
+						"post_hackathon"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Hackathons",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"url": {
+					"raw": "localhost:8000/users/hackathons/get_hackathons",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"users",
+						"hackathons",
+						"get_hackathons"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register for Hackathon",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "hackathon_title",
+							"value": "HackX0",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:8000/users/hackathons/register_for_hackathon",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"users",
+						"hackathons",
+						"register_for_hackathon"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Hackathon",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "hackathon_title",
+							"value": "CodeGeek",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:8000/users/hackathons/delete_hackathon",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"users",
+						"hackathons",
+						"delete_hackathon"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Submission Home",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8000/users/hackathons/submissions",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"users",
+						"hackathons",
+						"submissions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Submissions",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "hackathon_title",
+							"value": "HackX0",
+							"type": "default"
+						},
+						{
+							"key": "sort_by",
+							"value": "DESC",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:8000/users/hackathons/submissions/get_all_submissions",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"users",
+						"hackathons",
+						"submissions",
+						"get_all_submissions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Make Submission",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "submission_name",
+							"value": "HackX0 u0 submission",
+							"type": "default"
+						},
+						{
+							"key": "summary",
+							"value": "This is a sample submission.",
+							"type": "default"
+						},
+						{
+							"key": "hackathon_title",
+							"value": "HackX0",
+							"type": "default"
+						},
+						{
+							"key": "github_link",
+							"value": "https://github.com/u0/repositories/HackX0",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:8000/users/hackathons/submissions/make_submission",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"users",
+						"hackathons",
+						"submissions",
+						"make_submission"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Submission",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"warning": "This is a duplicate header and will be overridden by the Content-Type header generated by Postman.",
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "submission_name",
+							"value": "CodeGeek u0 submission",
+							"type": "default"
+						},
+						{
+							"key": "hackathon_title",
+							"value": "CodeGeek",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:8000/users/hackathons/submissions/delete_submission",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"users",
+						"hackathons",
+						"submissions",
+						"delete_submission"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
