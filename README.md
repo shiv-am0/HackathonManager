@@ -40,6 +40,10 @@ docker run -d -p 8000:8000 shivam001/hackathon-manager
 ```bash
 docker stop <container-name>
 ```
+# API
+* The base URL is: `http://localhost:8000/`.
+* Modify the Request Headers as given: `Content-Type: application/x-www-form-urlencoded`.
+* The Postman settings can be found and imported from `postman-endpoints/HackathonManagement.postman_collection.json`.
 
 # Usage
 1. The Users home can be reached using the API endpoint `/users/`.
@@ -55,3 +59,6 @@ docker stop <container-name>
 11. Get all submissions using the API endpoint `/users/hackathons/submissions/get_all_submissions`.
 12. Make submission to a registered hackathon using the API endpoint `/users/hackathons/submissions/make_submission`.
 13. Delete a submission using the API endpoint `/users/hackathons/submissions/delete_submission`.
+
+# License
+HakathonManager is licensed under the [MIT License](https://opensource.org/license/mit/).
