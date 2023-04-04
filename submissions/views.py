@@ -17,16 +17,24 @@ def index(request):
 
 
 # Function to get all submissions to a particular hackathon. Submissions can only be viewed by superusers.
+# Submissions can be viewed from newest to oldest and vice versa by passing ASC/DESC in sort_by field.
 @login_required()
 def get_all_submissions(request):
     if request.user.is_superuser:
         if request.method == 'POST':
             hackathon_title = request.POST.get('hackathon_title')
-            # sort_by = request.POST.get('sort_by')
+            sort_by = request.POST.get('sort_by')
             print(hackathon_title)
             all_submissions = Submission.objects.all()
             print(all_submissions)
             res = []
+
+            if sort_by == 'ASC':
+                all_submissions = all_submissions.order_by('submission_time')
+            elif sort_by == 'DESC':
+                all_submissions = all_submissions.order_by('-submission_time')
+            else:
+                return HttpResponse('Please enter a valid sort_by command, i.e. ASC/DESC')
 
             found = False
             for sub in all_submissions:
