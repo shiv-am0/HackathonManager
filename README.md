@@ -5,3 +5,9 @@ HakathonManager is a Django application that allows organizations to manage hack
 * User authentication and authorization
 * Posting and registering for hackathons
 * Submitting and reviewing submissions
+
+# Installation
+1. Clone the repository.
+```bash
+git clone https://github.com/your-username/HakathonManager.git
+```
