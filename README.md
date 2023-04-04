@@ -43,7 +43,7 @@ docker stop <container-name>
 # API
 * The base URL is: `http://localhost:8000/`.
 * Modify the Request Headers as given: `Content-Type: application/x-www-form-urlencoded`.
-* The Postman settings can be found and imported from `postman-endpoints/HackathonManagement.postman_collection.json`.
+* The Postman settings can be found and imported from [postman-endpoints/HackathonManagement.postman_collection.json](https://github.com/shiv-am0/HackathonManager/tree/master/postman-endpoints).
 
 # Usage
 1. The Users home can be reached using the API endpoint `/users/`.
